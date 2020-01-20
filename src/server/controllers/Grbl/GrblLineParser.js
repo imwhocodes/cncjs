@@ -12,6 +12,8 @@ import GrblLineParserResultEcho from './GrblLineParserResultEcho';
 import GrblLineParserResultFeedback from './GrblLineParserResultFeedback';
 import GrblLineParserResultSettings from './GrblLineParserResultSettings';
 import GrblLineParserResultStartup from './GrblLineParserResultStartup';
+import GrblLineParserResultProbe from './GrblLineParserResultProbe';
+
 
 // Grbl v1.1
 // https://github.com/gnea/grbl/blob/edge/doc/markdown/interface.md
@@ -45,8 +47,10 @@ class GrblLineParser {
             // [G30:0.000,0.000,0.000]
             // [G92:0.000,0.000,0.000]
             // [TLO:0.000]
-            // [PRB:0.000,0.000,0.000:0]
             GrblLineParserResultParameters,
+
+            // [PRB:0.000,0.000,0.000:0]
+            GrblLineParserResultProbe,
 
             // [HLP:] (v1.1)
             GrblLineParserResultHelp,

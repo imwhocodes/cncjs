@@ -1,6 +1,6 @@
-class GrblLineParserResultParameters {
+class GrblLineParserResultProbe {
     static parse(line) {
-        const r = line.match(/^\[(G54|G55|G56|G57|G58|G59|G28|G30|G92|TLO):(.+)\]$/);
+        const r = line.match(/^\[(PRB):(.+)\]$/);
         if (!r) {
             return null;
         }
@@ -11,22 +11,6 @@ class GrblLineParserResultParameters {
             name: name,
             value: ''
         };
-
-        // [Gxx:0.000]
-        const re = /^G\d+$/i;
-        if (re.test(name)) {
-            const axes = ['x', 'y', 'z', 'a', 'b', 'c'];
-            const list = value.split(',');
-            payload.value = {};
-            for (let i = 0; i < list.length; ++i) {
-                payload.value[axes[i]] = list[i];
-            }
-        }
-
-        // [TLO:0.000]
-        if (name === 'TLO') {
-            payload.value = value;
-        }
 
         // [PRB:0.000,0.000,1.492:1]
         if (name === 'PRB') {
@@ -41,10 +25,10 @@ class GrblLineParserResultParameters {
         }
 
         return {
-            type: GrblLineParserResultParameters,
+            type: GrblLineParserResultProbe,
             payload: payload
         };
     }
 }
 
-export default GrblLineParserResultParameters;
+export default GrblLineParserResultProbe;

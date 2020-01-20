@@ -294,6 +294,16 @@ class ProbeWidget extends PureComponent {
                 touchPlateHeight: mapValueToUnits(this.config.get('touchPlateHeight'), units),
                 retractionDistance: mapValueToUnits(this.config.get('retractionDistance'), units)
             });
+        },
+        'controller:probe': (payload) => {
+            this.setState({
+                lastProbeResult: {
+                    x: Number(100),
+                    y: Number(200),
+                    z: Number(300)
+                }
+            });
+            console.log(payload);
         }
     };
 
@@ -368,7 +378,12 @@ class ProbeWidget extends PureComponent {
             probeDepth: Number(this.config.get('probeDepth') || 0).toFixed(3) * 1,
             probeFeedrate: Number(this.config.get('probeFeedrate') || 0).toFixed(3) * 1,
             touchPlateHeight: Number(this.config.get('touchPlateHeight') || 0).toFixed(3) * 1,
-            retractionDistance: Number(this.config.get('retractionDistance') || 0).toFixed(3) * 1
+            retractionDistance: Number(this.config.get('retractionDistance') || 0).toFixed(3) * 1,
+            lastProbeResult: {
+                x: Number(NaN),
+                y: Number(NaN),
+                z: Number(NaN)
+            }
         };
     }
 

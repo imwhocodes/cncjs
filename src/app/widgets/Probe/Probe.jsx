@@ -26,7 +26,8 @@ class Probe extends PureComponent {
             probeDepth,
             probeFeedrate,
             touchPlateHeight,
-            retractionDistance
+            retractionDistance,
+            lastProbeResult
         } = state;
         const displayUnits = (units === METRIC_UNITS) ? i18n._('mm') : i18n._('in');
         const feedrateUnits = (units === METRIC_UNITS) ? i18n._('mm/min') : i18n._('in/min');
@@ -225,6 +226,28 @@ class Probe extends PureComponent {
                                 <span className="input-group-addon">{displayUnits}</span>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div className="row no-gutters" style={{ marginBottom: 10 }}>
+                    <div className="col-xs-12">
+                        <table className="table-bordered" data-table="dimension">
+                            <thead>
+                                <tr>
+                                    <th className={styles.axis}>{i18n._('Axis')}</th>
+                                    <th>{i18n._('X')}</th>
+                                    <th>{i18n._('Y')}</th>
+                                    <th>{i18n._('Z')}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td>{lastProbeResult.x} {displayUnits}</td>
+                                    <td>{lastProbeResult.y} {displayUnits}</td>
+                                    <td>{lastProbeResult.z} {displayUnits}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div className="row no-gutters">

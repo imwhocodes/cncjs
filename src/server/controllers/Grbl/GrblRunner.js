@@ -11,6 +11,9 @@ import GrblLineParserResultParameters from './GrblLineParserResultParameters';
 import GrblLineParserResultFeedback from './GrblLineParserResultFeedback';
 import GrblLineParserResultSettings from './GrblLineParserResultSettings';
 import GrblLineParserResultStartup from './GrblLineParserResultStartup';
+import GrblLineParserResultProbe from './GrblLineParserResultProbe';
+
+
 import {
     GRBL_ACTIVE_STATE_IDLE,
     GRBL_ACTIVE_STATE_ALARM
@@ -153,6 +156,21 @@ class GrblRunner extends events.EventEmitter {
                 this.settings = nextSettings; // enforce change
             }
             this.emit('parameters', payload);
+            return;
+        }
+        if (type === GrblLineParserResultProbe) {
+            const { name, value } = payload;
+            const nextSettings = {
+                ...this.settings,
+                parameters: {
+                    ...this.settings.parameters,
+                    [name]: value
+                }
+            };
+            if (!_.isEqual(this.settings.parameters[name], nextSettings.parameters[name])) {
+                this.settings = nextSettings; // enforce change
+            }
+            this.emit('probe', payload);
             return;
         }
         if (type === GrblLineParserResultFeedback) {
