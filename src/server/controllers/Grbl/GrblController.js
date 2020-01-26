@@ -92,6 +92,8 @@ class GrblController {
 
     settings = {};
 
+    probe = {};
+
     queryTimer = null;
 
     actionMask = {
@@ -532,6 +534,10 @@ class GrblController {
             this.emit('serialport:read', res.raw);
         });
 
+        this.runner.on('probe', (res) => {
+            this.emit('serialport:read', res.raw);
+        });
+
         this.runner.on('feedback', (res) => {
             this.emit('serialport:read', res.raw);
         });
@@ -790,6 +796,8 @@ class GrblController {
 
             // Tool
             tool: Number(tool) || 0,
+
+            probe: {},
 
             // Global objects
             ...globalObjects,

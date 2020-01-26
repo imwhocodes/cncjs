@@ -1,5 +1,7 @@
 import events from 'events';
+
 import _ from 'lodash';
+import logger from '../../lib/logger';
 import decimalPlaces from '../../lib/decimal-places';
 import GrblLineParser from './GrblLineParser';
 import GrblLineParserResultStatus from './GrblLineParserResultStatus';
@@ -18,6 +20,8 @@ import {
     GRBL_ACTIVE_STATE_IDLE,
     GRBL_ACTIVE_STATE_ALARM
 } from './constants';
+
+const log = logger('runner:Grbl');
 
 class GrblRunner extends events.EventEmitter {
     state = {
@@ -59,6 +63,9 @@ class GrblRunner extends events.EventEmitter {
         },
         settings: {
         }
+    };
+
+    probe = {
     };
 
     parser = new GrblLineParser();
@@ -159,16 +166,12 @@ class GrblRunner extends events.EventEmitter {
             return;
         }
         if (type === GrblLineParserResultProbe) {
-            const { name, value } = payload;
-            const nextSettings = {
-                ...this.settings,
-                parameters: {
-                    ...this.settings.parameters,
-                    [name]: value
-                }
-            };
-            if (!_.isEqual(this.settings.parameters[name], nextSettings.parameters[name])) {
-                this.settings = nextSettings; // enforce change
+            log.info('probe result');
+            log.info(payload);
+            log.info('////////////////////');
+
+            if (!_.isEqual(this.probe, payload)) {
+                this.probe = payload; // enforce change
             }
             this.emit('probe', payload);
             return;

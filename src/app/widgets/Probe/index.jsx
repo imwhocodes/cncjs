@@ -303,7 +303,6 @@ class ProbeWidget extends PureComponent {
                     z: Number(300)
                 }
             });
-            console.log(payload);
         }
     };
 
@@ -330,9 +329,10 @@ class ProbeWidget extends PureComponent {
             return;
         }
 
-        const { units, probeCommand, useTLO } = this.state;
+        const { units, probeCommand, useTLO, lastProbeResult } = this.state;
         this.config.set('probeCommand', probeCommand);
         this.config.set('useTLO', useTLO);
+        this.config.set('lastProbeResult', lastProbeResult);
 
         let {
             probeDepth,
@@ -381,7 +381,7 @@ class ProbeWidget extends PureComponent {
             retractionDistance: Number(this.config.get('retractionDistance') || 0).toFixed(3) * 1,
             lastProbeResult: {
                 x: Number(NaN),
-                y: Number(NaN),
+                y: Number(22),
                 z: Number(NaN)
             }
         };
